@@ -1,7 +1,7 @@
 from rest_framework import routers
 
 import core.views.user
-
+import core.views.student
 
 app_name = 'core'
 
@@ -9,7 +9,7 @@ urlpatterns = []
 
 router = routers.DefaultRouter()
 router.register('users', core.views.user.UserViewSet, basename='users')
-router.register('students', core.views.user.UserViewSet, basename='students')
+router.register('students', core.views.student.StudentViewSet, basename='students')
 
 
 urlpatterns += router.urls
