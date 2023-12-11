@@ -5,7 +5,7 @@ from core.tests.base import BaseRestTestCase
 from core import factories, models
 
 
-class Visit(BaseRestTestCase):
+class Course(BaseRestTestCase):
     any_permissions = ['core.view_course', 'core.add_course', 'core.change_course']
 
     def generate_data(self):
