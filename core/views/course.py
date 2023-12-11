@@ -9,7 +9,7 @@ from core.views.pagination import RestPagination
 class CourseViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication, SessionAuthentication)
     permission_classes = (DjangoModelPermissions,)
-    queryset = models.Course.objects.all()
+    queryset = models.Course.objects.order_by('id')
     pagination_class = RestPagination
     filterset_class = filters.Course
     serializer_class = serializers.Course
