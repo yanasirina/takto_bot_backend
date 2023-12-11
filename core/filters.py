@@ -14,3 +14,11 @@ class User(django_filters.FilterSet):
 
     def filter_is_active(self, qs, name, value):
         return qs.filter(is_active=value)
+
+
+class Student(django_filters.FilterSet):
+    telegram_id = django_filters.CharFilter(field_name='telegram_id', lookup_expr='exact')
+
+    class Meta:
+        model = models.Student
+        fields = ['telegram_id']
