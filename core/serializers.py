@@ -11,5 +11,5 @@ class User(serializers.ModelSerializer):
 
 class Student(serializers.ModelSerializer):
     class Meta:
-        model = models.DjangoUser
+        model = models.Student
         fields = ['id', 'telegram_id', 'username', 'name', 'phone_number']
