@@ -1,4 +1,4 @@
-Django==5.0
+Django==4.2
 djangorestframework==3.14.0
 markdown==3.5.1
 django-filter==23.5
@@ -6,3 +6,4 @@ ipython==8.18.1
 python-dotenv==1.0.0
 drf-yasg==1.21.7
 setuptools==69.0.2
+factory-boy==3.3.0
