@@ -17,4 +17,4 @@ class Course(django_filters.FilterSet):
 
     class Meta:
         model = models.Course
-        fields = '__all__'
+        fields = ['name', 'is_active']
