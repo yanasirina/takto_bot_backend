@@ -13,3 +13,15 @@ class Student(serializers.ModelSerializer):
     class Meta:
         model = models.Student
         fields = ['id', 'telegram_id', 'username', 'name', 'phone_number']
+
+
+class CourseShort(serializers.ModelSerializer):
+    class Meta:
+        model = models.Course
+        fields = ['id', 'name', 'is_active']
+
+
+class Course(CourseShort):
+    class Meta:
+        model = models.Course
+        fields = ['id', 'name', 'description', 'is_active']
