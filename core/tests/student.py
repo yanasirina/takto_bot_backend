@@ -3,6 +3,7 @@ from rest_framework import status
 
 from core.tests.base import BaseRestTestCase
 from core import factories, models
+from lib.string import clean_phone_number
 
 
 class Student(BaseRestTestCase):
@@ -34,7 +35,7 @@ class Student(BaseRestTestCase):
             "telegram_id": 123467,
             "username": 'student username',
             "name": 'student name',
-            "phone_number": '+79999999999',
+            "phone_number": '+7 (999) 999-99-99',
         }
         response = self.client.post(path=reverse('core:students-list'), data=data, content_type="application/json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -43,7 +44,7 @@ class Student(BaseRestTestCase):
         self.assertEqual(data['telegram_id'], created_student.telegram_id)
         self.assertEqual(data['username'], created_student.username)
         self.assertEqual(data['name'], created_student.name)
-        self.assertEqual(data['phone_number'], created_student.phone_number)
+        self.assertEqual(clean_phone_number(data['phone_number']), created_student.phone_number)
 
     def test_update(self):
         data = {
