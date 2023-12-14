@@ -6,7 +6,7 @@ from core import factories, models
 
 
 class Student(BaseRestTestCase):
-    any_permissions = ['core.view_student', 'core.add_student', 'core.change_student']
+    any_permissions = ['core.view_student', 'core.add_student', 'core.change_student', 'core.delete_student']
 
     def generate_data(self):
         factories.Student.create_batch(5)
@@ -61,3 +61,10 @@ class Student(BaseRestTestCase):
         self.assertEqual(data['username'], student.username)
         self.assertEqual(data['name'], student.name)
         self.assertEqual(data['phone_number'], student.phone_number)
+
+    def test_delete(self):
+        student = models.Student.objects.order_by('id').first()
+
+        response = self.client.delete(path=reverse('core:students-detail', kwargs={'pk': student.id}))
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(models.Student.objects.filter(id=student.id).exists())
