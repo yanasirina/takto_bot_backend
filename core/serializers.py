@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from core import models
+from lib.string import clean_phone_number
 
 
 class User(serializers.ModelSerializer):
@@ -13,6 +14,11 @@ class Student(serializers.ModelSerializer):
     class Meta:
         model = models.Student
         fields = ['id', 'telegram_id', 'username', 'name', 'phone_number']
+
+    @staticmethod
+    def validate_phone_number(value):
+        clean_value = clean_phone_number(value)
+        return clean_value
 
 
 class CourseShort(serializers.ModelSerializer):
