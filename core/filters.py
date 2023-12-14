@@ -21,8 +21,6 @@ class Course(django_filters.FilterSet):
 
 
 class Student(django_filters.FilterSet):
-    telegram_id = django_filters.CharFilter(field_name='telegram_id', lookup_expr='exact')
-
     class Meta:
         model = models.Student
         fields = ['telegram_id']
