@@ -6,7 +6,7 @@ from core import factories, models
 
 
 class Course(BaseRestTestCase):
-    any_permissions = ['core.view_course', 'core.add_course', 'core.change_course']
+    any_permissions = ['core.view_course', 'core.add_course', 'core.change_course', 'core.delete_course']
 
     def generate_data(self):
         factories.Course.create_batch(4)
@@ -92,3 +92,11 @@ class Course(BaseRestTestCase):
         self.assertEqual(data['name'], course.name)
         self.assertEqual(data['description'], course.description)
         self.assertEqual(data['is_active'], course.is_active)
+
+    def test_delete(self):
+        course = models.Course.objects.order_by('id').first()
+
+        response = self.client.delete(path=reverse('core:courses-detail', kwargs={'pk': course.id}))
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(models.Student.objects.filter(id=course.id).exists())
+
