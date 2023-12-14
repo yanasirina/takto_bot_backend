@@ -18,3 +18,9 @@ class Course(django_filters.FilterSet):
     class Meta:
         model = models.Course
         fields = ['name', 'is_active']
+
+
+class Student(django_filters.FilterSet):
+    class Meta:
+        model = models.Student
+        fields = ['telegram_id']
