@@ -99,4 +99,3 @@ class Course(BaseRestTestCase):
         response = self.client.delete(path=reverse('core:courses-detail', kwargs={'pk': course.id}))
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertFalse(models.Student.objects.filter(id=course.id).exists())
-
