@@ -5,14 +5,9 @@ from core.tests import BaseRestTestCase
 
 
 class AuthTokenTests(BaseRestTestCase):
-    def setUp(self):
-        super().setUp()
-        self.client = APIClient()
-
     def test_authenticate_success(self):
         data = {'username': self.username, 'password': self.password}
         url = reverse('core:auth-token')
-
         response = self.client.post(url, data)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
