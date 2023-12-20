@@ -4,12 +4,12 @@ from django.urls import path
 import core.views.user
 import core.views.course
 import core.views.student
-import core.views.auth
+from rest_framework.authtoken.views import ObtainAuthToken
 
 
 app_name = 'core'
 
-urlpatterns = [path('auth', core.views.auth.AuthTokenView.as_view(), name='auth-token'),
+urlpatterns = [path('auth', ObtainAuthToken.as_view(), name='auth-token'),
                ]
 
 router = routers.DefaultRouter()
