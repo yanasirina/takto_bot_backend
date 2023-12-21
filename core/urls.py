@@ -9,8 +9,9 @@ from rest_framework.authtoken.views import ObtainAuthToken
 
 app_name = 'core'
 
-urlpatterns = [path('auth', ObtainAuthToken.as_view(), name='auth-token'),
-               ]
+urlpatterns = [
+    path('auth', ObtainAuthToken.as_view(), name='auth-token'),
+]
 
 router = routers.DefaultRouter()
 router.register('users', core.views.user.UserViewSet, basename='users')
