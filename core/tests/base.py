@@ -32,7 +32,7 @@ class BaseRestTestCase(TestCase):
             )
 
     def create_user(self):
-        self.user = models.DjangoUser.objects.create(
+        self.user = models.DjangoUser.objects.create_user(
             username=self.username,
             password=self.password,
         )
