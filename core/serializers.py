@@ -10,6 +10,26 @@ class User(serializers.ModelSerializer):
         fields = ['id', 'username', 'first_name', 'last_name', 'email', 'is_active']
 
 
+class UserDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.DjangoUser
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'is_active', 'is_staff', 'is_superuser']
+
+
+class UserCreateUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.DjangoUser
+        fields = ['password', 'username', 'first_name', 'last_name', 'email', 'is_active', 'is_staff', 'is_superuser']
+
+    def create(self, validated_data):
+        user = self.Meta.model.objects.create_user(**validated_data)
+        return user
+
+    def update(self, instance, validated_data):
+        instance.set_password(validated_data.pop('password', None))
+        return super().update(instance, validated_data)
+
+
 class Student(serializers.ModelSerializer):
     class Meta:
         model = models.Student
