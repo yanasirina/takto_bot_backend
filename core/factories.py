@@ -34,4 +34,4 @@ class User(factory.django.DjangoModelFactory):
     is_active = factory.Faker('boolean')
 
     class Meta:
-        model = models.get_user_model()
+        model = models.DjangoUser

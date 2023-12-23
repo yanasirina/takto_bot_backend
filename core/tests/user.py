@@ -6,7 +6,7 @@ from core import factories, models
 
 
 class User(BaseRestTestCase):
-    any_permissions = ['auth.view_user', 'auth.add_user', 'auth.change_user']
+    any_permissions = ['auth.view_user', 'auth.add_user', 'auth.change_user', 'auth.delete_user']
 
     def generate_data(self):
         factories.User.create_batch(4)
@@ -79,6 +79,20 @@ class User(BaseRestTestCase):
         self.assertEqual(data['is_staff'], created_user.is_staff)
         self.assertEqual(data['is_superuser'], created_user.is_superuser)
 
+    def test_create_not_password(self):
+        data = {
+            'username': 'user',
+            'first_name': 'New',
+            'last_name': 'User',
+            'email': 'user@example.com',
+            'is_active': True,
+            'is_staff': False,
+            'is_superuser': False,
+        }
+
+        response = self.client.post(reverse('core:users-list'), data=data, content_type="application/json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
     def test_update(self):
         data = {
             'username': 'new_user',
@@ -104,3 +118,49 @@ class User(BaseRestTestCase):
         self.assertEqual(data['is_active'], user.is_active)
         self.assertEqual(data['is_staff'], user.is_staff)
         self.assertEqual(data['is_superuser'], user.is_superuser)
+
+    def test_update_not_password(self):
+        original_password = 'originalpassword123'
+        user = models.DjangoUser.objects.create_user(
+            username='original_user',
+            password=original_password,
+            first_name='New',
+            last_name='User',
+            email='user@example.com',
+            is_active=True,
+            is_staff=False,
+            is_superuser=False
+        )
+
+        data = {
+            'username': 'new_user',
+            'first_name': 'new New',
+            'last_name': 'new User',
+            'email': 'new_user@example.com',
+            'is_active': False,
+            'is_staff': False,
+            'is_superuser': False,
+        }
+
+        response = self.client.put(path=reverse('core:users-detail', kwargs={'pk': user.id}), data=data,
+                                   content_type="application/json")
+        if response.status_code != status.HTTP_200_OK:
+            print("Response data:", response.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        user.refresh_from_db()
+        self.assertEqual(data['username'], user.username)
+        self.assertTrue(user.check_password(original_password))
+        self.assertEqual(data['first_name'], user.first_name)
+        self.assertEqual(data['last_name'], user.last_name)
+        self.assertEqual(data['email'], user.email)
+        self.assertEqual(data['is_active'], user.is_active)
+        self.assertEqual(data['is_staff'], user.is_staff)
+        self.assertEqual(data['is_superuser'], user.is_superuser)
+
+    def test_delete(self):
+        user = models.DjangoUser.objects.order_by('id').first()
+
+        response = self.client.delete(path=reverse('core:users-detail', kwargs={'pk': user.id}))
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(models.Student.objects.filter(id=user.id).exists())
