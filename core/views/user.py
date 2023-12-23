@@ -18,7 +18,7 @@ class UserViewSet(viewsets.ModelViewSet):
         if self.action == 'list':
             return serializers.User
         elif self.action == 'retrieve':
-            return serializers.UserDetailsSerializer
+            return serializers.UserDetails
         elif self.action in ['create', 'update', 'partial_update']:
-            return serializers.UserCreateUpdateSerializer
+            return serializers.UserCreateUpdate
         return super().get_serializer_class()
