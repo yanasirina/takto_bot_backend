@@ -10,24 +10,35 @@ class User(serializers.ModelSerializer):
         fields = ['id', 'username', 'first_name', 'last_name', 'email', 'is_active']
 
 
-class UserDetailsSerializer(serializers.ModelSerializer):
+class UserDetails(serializers.ModelSerializer):
     class Meta:
         model = models.DjangoUser
         fields = ['id', 'username', 'first_name', 'last_name', 'email', 'is_active', 'is_staff', 'is_superuser']
 
 
-class UserCreateUpdateSerializer(serializers.ModelSerializer):
+class UserCreateUpdate(serializers.ModelSerializer):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if not self.instance:
+            self.fields['password'].required = True
+            self.fields['password'].allow_blank = False
+        else:
+            self.fields['password'].required = False
+            self.fields['password'].allow_blank = True
+
     class Meta:
         model = models.DjangoUser
         fields = ['password', 'username', 'first_name', 'last_name', 'email', 'is_active', 'is_staff', 'is_superuser']
 
-    def create(self, validated_data):
-        user = self.Meta.model.objects.create_user(**validated_data)
-        return user
+    def save(self, **kwargs):
+        password = self.validated_data.pop('password', None)
+        instance = super().save(**kwargs)
 
-    def update(self, instance, validated_data):
-        instance.set_password(validated_data.pop('password', None))
-        return super().update(instance, validated_data)
+        if password:
+            instance.set_password(password)
+            instance.save()
+
+        return instance
 
 
 class Student(serializers.ModelSerializer):
