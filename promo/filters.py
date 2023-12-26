@@ -10,4 +10,4 @@ class PromoCode(django_filters.FilterSet):
 
     class Meta:
         model = models.PromoCode
-        fields = ['name', 'is_active', 'student__name', 'student__phone_number']
+        fields = ['name', 'is_active', 'student_name', 'student_phone_number']
