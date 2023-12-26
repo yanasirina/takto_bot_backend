@@ -154,3 +154,9 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'DATETIME_FORMAT': '%Y-%m-%d %H:%M:%S',
 }
+
+# REDIS_HOST = 'localhost'
+# REDIS_PORT = 63790
+# CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}'
+# CELERY_WORKER_PREFETCH_MULTIPLIER = 1
+# CELERY_DEFAULT_QUEUE = 'default'
