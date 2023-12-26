@@ -17,3 +17,6 @@ python manage.py runserver \
 или с помощью конфигурации pycharm:
 ![image](https://github.com/yanasirina/takto_bot_backend/assets/92913721/07caae76-2b53-449f-9f51-bfd83c91d585)
 
+
+## Настройка celery (при необходимости)
+docker run -d --restart always -p 63790:6379 --name=takto_redis redis
