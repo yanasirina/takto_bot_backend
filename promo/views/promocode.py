@@ -2,8 +2,8 @@ from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 
 from promo import models, filters, serializers
-from promo.permissions import DjangoModelPermissions
-from promo.views.pagination import RestPagination
+from core.permissions import DjangoModelPermissions
+from core.views.pagination import RestPagination
 
 
 class PromoCodeViewSet(viewsets.ModelViewSet):
