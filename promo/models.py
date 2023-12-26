@@ -6,3 +6,10 @@ class PromoCode(models.Model):
     student = models.ForeignKey('core.Student', on_delete=models.SET_NULL, null=True, blank=True)
     description = models.TextField('Описание', help_text='можно указать размер скидки или особые условия')
     is_active = models.BooleanField('Статус', default=True)
+
+    class Meta:
+        verbose_name = 'Промокод'
+        verbose_name_plural = 'Промокоды'
+
+    def __str__(self):
+        return self.name
