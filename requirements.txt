@@ -7,3 +7,4 @@ python-dotenv==1.0.0
 drf-yasg==1.21.7
 setuptools==69.0.2
 factory-boy==3.3.0
+coreapi==2.3.3
