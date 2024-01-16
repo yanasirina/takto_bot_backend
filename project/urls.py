@@ -44,5 +44,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
 
     path('backend/', include(core.urls, namespace='core')),
-    path('backend/promo', include(promo.urls, namespace='promo'))
+    path('backend/promo/', include(promo.urls, namespace='promo'))
 ]
